@@ -17,19 +17,32 @@ import './App.css';
 // localStorage.setItem('TODOS_V1', JSON.stringify(defaultTodos));
 // localStorage.removeItem('TODOS_V1');
 
+function useLocalStorage(itemName,initialValue) {
+  
+  //Estado para guardar en "todos" la lista de TODOs
+  const localStorageItem = localStorage.getItem(itemName)
+  let parseItems
+
+  if (!localStorageItem) {
+    localStorage.setItem(itemName, JSON.stringify(initialValue))
+    parseItems = initialValue
+  } else {
+    parseItems = JSON.parse(localStorageItem)
+  }
+  
+  const [item, setItem] = React.useState(parseItems)
+
+  //Función que actualice el estado y el local storage al tiempo
+  const saveItem = (newItem) => {
+    localStorage.setItem(itemName, JSON.stringify(newItem))    
+    setItem(newItem)
+  }
+  return [ item, saveItem]
+}
+
 function App() {
 
-  //Estado para guardar en "todos" la lista de TODOs
-  const localStorageTodos = localStorage.getItem('TODOS_V1')
-  let parsedTodos
-
-  if (!localStorageTodos) {
-    localStorage.setItem('TODOS_V1', JSON.stringify([]))
-    parsedTodos = []
-  } else {
-    parsedTodos = JSON.parse(localStorageTodos)
-  }
-  const [todos, setTodos] = React.useState(parsedTodos)
+  const [todos, saveTodos] = useLocalStorage('TODOS_V1',[])
 
   //Estado para la lectura del input o buscador
   const [searchValue, setSearchValue] = React.useState('')
@@ -53,12 +66,7 @@ function App() {
     }
   )
 
-  //Función que actualice el estado y el local storage al tiempo
-  const saveTodos = (newTodos) => {
-    localStorage.setItem('TODOS_V1', JSON.stringify(newTodos))
-    
-    setTodos(newTodos)
-  }
+  
 
   // Función para marcar los TODOs completados al dar click en el check
   const completeTodo = (text) => {
