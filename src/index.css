@@ -1,0 +1,18 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  height: 100%;
+  font-family: 'Roboto Flex', sans-serif;
+}
+html {
+  font-size: 62.5%;
+  /* background: rgb(2, 44, 14); */
+}
+#root {
+  margin: 0 24px;
+  position: relative;
+  min-height: 100vh;
+}
