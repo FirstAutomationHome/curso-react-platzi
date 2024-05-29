@@ -20,3 +20,4 @@ export default function TodoItem({ text, completed, onComplete, onDelete }) {
     
   )
 }
+export {TodoItem}
